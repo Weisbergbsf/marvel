@@ -1,6 +1,6 @@
 # Marvel
 
-Marvel is a project developed with React and Ant Design. This application will allow the user to see the list of all characters, where each personage is displayed on a Card with the name and the image. It is also possible to search for a character by name, list in alphabetical order, view the details and series of the character, edit the name and description of the character and mark it as a Favorite.
+Marvel is a project developed with React and Ant Design. This application will allow the user to see the list of all characters, where each character is displayed on a Card with the name and the image. It is also possible to search for a character by name, list in alphabetical order, view the details and series of the character, edit the name and description of the character and mark it as a Favorite.
 
 This project uses the official Marvel API which only provides the GET method. To simulate a PATCH of a character's data and to favor it, Local Storage was used - which makes it possible to store data locally in the user's browser.
 
