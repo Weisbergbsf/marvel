@@ -4,6 +4,8 @@ Marvel is a project developed with React and Ant Design. This application will a
 
 This project uses the official Marvel API which only provides the GET method. To simulate a PATCH of a character's data and to favor it, Local Storage was used - which makes it possible to store data locally in the user's browser.
 
+## Demo
+Marvel (https://marvel-heroess.herokuapp.com/)
 
 ### Documentation for:
 
@@ -31,6 +33,15 @@ This project uses the official Marvel API which only provides the GET method. To
 Runs the app in the development mode.
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
+
+### How to run the test
+```
+  1. git clone https://github.com/Weisbergbsf/marvel.git
+  2. cd marvel
+  3. npm install
+  4. npm test
+```
+
 ### File Structure
 
 Within the download you'll find the following directories and files:
@@ -48,47 +59,53 @@ marvel
     ├── components
     │   ├── Backdrop
     │   │   ├── Backdrop.js
-    │   │   ├── styles.js
+    │   │   └── styles.js
     │   ├── Card
     │   │   ├── CustomCard.js
-    │   │   ├── styles.js
+    │   │   └── styles.js
     ├── containers
     │   ├── Characters
-    │   │   ├── Characters.js
+    │   │   └── Characters.js
     ├── layouts
     │   ├── DefaultLayout.js
     │   ├── Navigation.js
     │   └── styles.js
     ├── models
-    │   ├── Character.js
+    │   └── Character.js
     ├── routes
-    │   ├── routes.js
+    │   └── routes.js
     ├── services
-    │   ├── storageService.js
+    │   └── storageService.js
     ├── store
     │   ├── actions
     │   │   ├── utils
-    │   │   │   ├── defaultMethods.js
+    │   │   │   └── defaultMethods.js
     │   │   ├── charactersAction.js
-    │   │   ├── index.js
+    │   │   └── index.js
     │   ├── reducers
     │   │   ├── charactersReducer.js
-    │   │   ├── index.js
+    │   │   └── index.js
     │   ├── index.js
-    │   ├── types.js
+    │   └── types.js
+    ├── test
+    │   ├── mock 
+    │   │   └── dummy-data.js 
+    │   ├── charactersReducer.test.js
+    │   ├── CustomCard.test.js
+    │   └── EditCharacter.test.js
     ├── utils
-    │   ├── api.js
+    │   └── api.js
     ├── views
     │   ├── CharacterDetails
     │   │   ├── CharacterDetails.js
-    │   │   ├── styles.js
+    │   │   └── styles.js
     │   ├── EditCharacter
     │   │   ├── EditCharacter.jsx
-    │   │   ├── styles.js
+    │   │   └── styles.js
     │   ├── Favorites
     │   │   ├── Favorites.js
-    │   │   ├── styles.js
-    │   ├── Home
+    │   │   └── styles.js
+    │   └── Home
     │      └── Home.js
     ├── App.js
     ├── App.test.js
