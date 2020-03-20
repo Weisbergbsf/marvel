@@ -8,7 +8,6 @@ const styles = {
     backgroundColor: "black",
     textAlign: "center",
     color: "white",
-    border: "0px solid red",
     minHeight: "80vh",
     padding: 20
   },

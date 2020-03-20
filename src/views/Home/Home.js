@@ -1,4 +1,4 @@
-import React, { useState, useEffect, memo, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   AutoComplete,
   Input,
@@ -42,9 +42,6 @@ const Home = props => {
   useEffect(() => {
     loadCharacters();
   }, [loadCharacters]);
-  // useEffect(() => {
-  //   dispatch(fetchCharacters(null, nameCharacter, orderBy, page));
-  // }, [dispatch, nameCharacter, orderBy, page]);
 
   useEffect(() => {
     if (nameToSearch) {
@@ -154,4 +151,4 @@ const Home = props => {
   );
 };
 
-export default memo(Home);
+export default Home;
