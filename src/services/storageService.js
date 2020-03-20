@@ -5,10 +5,16 @@ export const FAVORITE = "favorite";
 export const loadStorageCharacters = () => {
   createStorageDataIfNotExists();
   let charactersStorage = JSON.parse(localStorage.getItem(CHARACTERS));
+  return charactersStorage;
+};
+
+export const loadStorageFavorites = () => {
+  createStorageDataIfNotExists();
+  let charactersStorage = JSON.parse(localStorage.getItem(CHARACTERS));
   return charactersStorage.filter(obj => obj.isFavorite === true);
 };
 
-export const storageToFavorites = (value, action) => {
+export const saveCharacter = (value, action) => {
   createStorageDataIfNotExists();
   let charactersStorage = JSON.parse(localStorage.getItem(CHARACTERS));
   let characters = [...charactersStorage];

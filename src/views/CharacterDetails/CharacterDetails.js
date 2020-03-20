@@ -5,7 +5,7 @@ import {
   fetchCharacters,
   fetchCharactersSeries
 } from "../../store/actions/charactersAction";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import CustomCard from "../../components/Card/CustomCard";
 import { Row, Col, Pagination } from "antd";
 import Characters from "../../containers/Characters/Characters";
@@ -23,6 +23,7 @@ const CharacterDetails = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const dispatch = useDispatch();
+  const history = useHistory();
   const { id } = useParams();
 
   useEffect(() => {
@@ -34,13 +35,16 @@ const CharacterDetails = () => {
   );
 
   useEffect(() => {
+    if (characters.length === 0) {
+      return history.push("/");
+    }
     if (characters.results) {
       setCharacter(characters.results[0]);
     }
     if (series.results) {
       setSerieList(series.results);
     }
-  }, [characters.results, series.results]);
+  }, [characters.length, characters.results, history, series.results]);
 
   const onChangePage = value => {
     setCurrentPage(value);

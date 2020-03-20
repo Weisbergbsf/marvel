@@ -3,7 +3,8 @@ import * as type from "../types";
 import { fetchStart, fetchSuccess, fetchError } from "./utils/defaultMethods";
 import {
   loadStorageCharacters,
-  storageToFavorites,
+  loadStorageFavorites,
+  saveCharacter,
   UPDATE,
   FAVORITE
 } from "../../services/storageService";
@@ -60,7 +61,7 @@ export const fetchCharacters = (characterId, nameToSearch, orderBy,limit, offset
           new Character(id, name, description, thumbnail, false, false)
         );
       });
-      loadStorageCharacters().map(objStorage => {
+       loadStorageCharacters().map(objStorage => {
         return characters.results.map(obj => {
           if (objStorage.id === obj.id) {
             obj.name = objStorage.name;
@@ -104,17 +105,17 @@ export const fetchCharactersSeries = (id, limit, offset) => dispatch => {
 };
 
 export const updateCharacter = character => async dispatch => {
-  storageToFavorites(character, UPDATE);
+  saveCharacter(character, UPDATE);
   dispatch(fetchSuccess(type.FETCH_CHARACTER_UPDATE_SUCCSESS, character));
 };
 
 export const fetchStorageCharacters = () => dispatch => {
-  const characters = loadStorageCharacters();
+  const characters = loadStorageFavorites();
   dispatch(fetchSuccess(type.LOAD_FAVORITES, characters));
 };
 
 export const toggleFavorite = (id, character) => async dispatch => {
-  storageToFavorites(
+  saveCharacter(
     new Character(
       character.id,
       character.name,
