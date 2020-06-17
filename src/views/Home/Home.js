@@ -7,14 +7,14 @@ import {
   Col,
   Select,
   Typography,
-  Pagination
+  Pagination,
 } from "antd";
 import { SyncOutlined } from "@ant-design/icons";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchCharacters,
-  fetchCharactersByName
+  fetchCharactersByName,
 } from "../../store/actions/charactersAction";
 
 import Backdrop from "../../components/Backdrop/Backdrop";
@@ -23,10 +23,10 @@ import Characters from "../../containers/Characters/Characters";
 const { Option } = Select;
 const { Text } = Typography;
 
-const Home = props => {
+const Home = (props) => {
   const [orderBy, setOrderBy] = useState("name");
   const [offset, setOffset] = useState(0);
-  const [limit] = useState(8);
+  const [limit, setLimit] = useState(8);
   const [currentPage, setCurrentPage] = useState(1);
   const [nameToSearch, setNameToSearch] = useState();
   const [nameCharacter, setNameCharacter] = useState();
@@ -36,7 +36,7 @@ const Home = props => {
   const dispatch = useDispatch();
 
   const loadCharacters = useCallback(() => {
-    dispatch(fetchCharacters(null, nameCharacter, orderBy, limit, offset));
+    dispatch(fetchCharacters(nameCharacter, orderBy, limit, offset));
   }, [dispatch, nameCharacter, orderBy, limit, offset]);
 
   useEffect(() => {
@@ -49,18 +49,18 @@ const Home = props => {
     }
   }, [dispatch, nameToSearch]);
 
-  const { characters } = useSelector(state => state);
+  const { characters } = useSelector((state) => state);
   useEffect(() => {
     if (characters.charactersForSelect.length > 0) {
       setOptionsCharacters(characters.charactersForSelect);
     }
   }, [characters.charactersForSelect]);
 
-  const handleOrderBy = value => {
+  const handleOrderBy = (value) => {
     setOrderBy(value);
   };
 
-  const onChangePage = value => {
+  const onChangePage = (value) => {
     setCurrentPage(value);
     setOffset(limit * (value - 1));
   };
@@ -69,7 +69,11 @@ const Home = props => {
   if (characters.characters) {
     pagination = (
       <Pagination
+        pageSizeOptions={["8", "10", "20", "50", "100"]}
         pageSize={limit}
+        onShowSizeChange={(current, size) => {
+          setLimit(size);
+        }}
         total={characters.characters.total}
         current={currentPage}
         onChange={onChangePage}
@@ -84,15 +88,15 @@ const Home = props => {
         options={optionsCharacters}
         value={optionsValue}
         style={{
-          width: "40%"
+          width: "40%",
         }}
-        onChange={value => {
+        onChange={(value) => {
           if (!value) {
             setNameToSearch();
             setNameCharacter();
           }
         }}
-        onSearch={value => {
+        onSearch={(value) => {
           setOptionsValue(value);
           const timer = setTimeout(() => {
             if (value.length >= 2) {

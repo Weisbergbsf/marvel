@@ -3,54 +3,55 @@ import * as type from "../types";
 const initialState = {
   charactersFavorites: [],
   characters: [],
+  character: null,
   loading: false,
   charactersForSelect: [],
   loadingForSelect: false,
   series: [],
   loadingSeries: false,
   errors: null,
-  message: null
+  message: null,
 };
 
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
   switch (action.type) {
     case type.FETCH_CHARACTERS_START:
       return {
         ...state,
-        loading: true
+        loading: true,
       };
 
     case type.FETCH_SERIES_START:
       return {
         ...state,
-        loadingSeries: true
+        loadingSeries: true,
       };
 
     case type.FETCH_CHARACTERS_BY_NAME_START:
       return {
         ...state,
-        loadingForSelect: true
+        loadingForSelect: true,
       };
 
     case type.FETCH_CHARACTERS_FAIL:
       return {
         ...state,
         error: action.error,
-        loading: false
+        loading: false,
       };
 
     case type.FETCH_SERIES_FAIL:
       return {
         ...state,
         error: action.error,
-        loadingSeries: false
+        loadingSeries: false,
       };
 
     case type.FETCH_CHARACTERS_BY_NAME_FAIL:
       return {
         ...state,
         error: action.error,
-        loadingForSelect: false
+        loadingForSelect: false,
       };
 
     case type.FETCH_CHARACTERS_SUCCSESS:
@@ -58,7 +59,14 @@ export default function(state = initialState, action) {
         ...state,
         characters: action.payload,
         errors: null,
-        loading: false
+        loading: false,
+      };
+    case type.FETCH_CHARACTER_BY_ID_SUCCSESS:
+      return {
+        ...state,
+        character: action.payload,
+        errors: null,
+        loading: false,
       };
 
     case type.FETCH_SERIES_SUCCSESS:
@@ -66,7 +74,7 @@ export default function(state = initialState, action) {
         ...state,
         series: action.payload,
         errors: null,
-        loadingSeries: false
+        loadingSeries: false,
       };
 
     case type.FETCH_CHARACTERS_BY_NAME_SUCCSESS:
@@ -74,13 +82,13 @@ export default function(state = initialState, action) {
         ...state,
         charactersForSelect: action.payload,
         errors: null,
-        loadingForSelect: false
+        loadingForSelect: false,
       };
 
     case type.FETCH_CHARACTER_UPDATE_SUCCSESS:
       const obj = action.payload;
       const index = state.characters.results.findIndex(
-        character => character.id === obj.id
+        (character) => character.id === obj.id
       );
       const newName = (state.characters.results[index].name = obj.name);
       const newDescription = (state.characters.results[index].description =
@@ -89,37 +97,39 @@ export default function(state = initialState, action) {
       updateCharacters[index] = {
         ...state.characters.results[index],
         name: newName,
-        description: newDescription
+        description: newDescription,
       };
       return {
         ...state,
         loading: false,
-        characters: { ...state.characters, results: updateCharacters }
+        characters: { ...state.characters, results: updateCharacters },
+        character: obj,
       };
 
-    case type.TOGGLE_FAVORITES:
+    case type.TOGGLE_FAVORITE_SUCCESS:
       const chaIndex = state.characters.results.findIndex(
-        character => character.id === action.payload
+        (character) => character.id === action.payload
       );
       if (chaIndex >= 0) {
         const newFavStatus = !state.characters.results[chaIndex].isFavorite;
         const updateFavorite = [...state.characters.results];
         updateFavorite[chaIndex] = {
           ...state.characters.results[chaIndex],
-          isFavorite: newFavStatus
+          isFavorite: newFavStatus,
         };
         return {
           ...state,
-          characters: { ...state.characters, results: updateFavorite }
+          characters: { ...state.characters, results: updateFavorite },
+          character: updateFavorite[chaIndex],
         };
       } else {
         return state;
       }
 
-    case type.LOAD_FAVORITES:
+    case type.LOAD_FAVORITES_SUCCESS:
       return {
         ...state,
-        charactersFavorites: action.payload
+        charactersFavorites: action.payload,
       };
 
     default:

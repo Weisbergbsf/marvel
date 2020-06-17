@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   toggleFavorite,
-  fetchCharacters,
-  fetchCharactersSeries
+  fetchCharactersSeries,
+  fetchCharacterById,
 } from "../../store/actions/charactersAction";
 import { useParams, useHistory } from "react-router-dom";
 import CustomCard from "../../components/Card/CustomCard";
@@ -16,7 +16,6 @@ import styles from "./styles";
 
 const CharacterDetails = () => {
   const [showForm, setShowForm] = useState(false);
-  const [character, setCharacter] = useState();
   const [serieList, setSerieList] = useState([]);
   const [offset, setOffset] = useState(0);
   const [limit] = useState(4);
@@ -25,75 +24,68 @@ const CharacterDetails = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { id } = useParams();
-
   useEffect(() => {
-    dispatch(fetchCharacters(id, null, null, null, null));
+    dispatch(fetchCharacterById(id));
     dispatch(fetchCharactersSeries(id, limit, offset));
   }, [dispatch, id, limit, offset]);
-  const { characters, series, loading, loadingSeries } = useSelector(
-    state => state.characters
+  const { characters, character, series, loadingSeries } = useSelector(
+    (state) => state.characters
   );
 
   useEffect(() => {
     if (characters.length === 0) {
       return history.push("/");
     }
-    if (characters.results) {
-      setCharacter(characters.results[0]);
-    }
     if (series.results) {
       setSerieList(series.results);
     }
   }, [characters.length, characters.results, history, series.results]);
 
-  const onChangePage = value => {
+  const onChangePage = (value) => {
     setCurrentPage(value);
     setOffset(limit * (value - 1));
   };
-
   let contentCard = null;
   let contentSeries = null;
-  if (!loading && !loadingSeries) {
-    if (character) {
-      contentCard = (
-        <CustomCard
-          name={character.name}
-          description={character.description}
-          imageUrl={character.thumbnail}
-          isFavorite={character.isFavorite}
-          onClickFavorite={() =>
-            dispatch(toggleFavorite(character.id, character))
-          }
-          onClickEdit={() => setShowForm(!showForm)}
-        />
-      );
-    }
-    if (serieList.length > 0) {
-      contentSeries = (
-        <div>
-          <h1 style={styles.text}>SERIES</h1>
-          <Characters data={series.results || []} showIsFavorite={false} />
-          <Row justify="center">
-            <Pagination
-              pageSize={limit}
-              showTotal={total => (
-                <span style={styles.text}>Total {total}</span>
-              )}
-              total={series.total}
-              current={currentPage}
-              onChange={onChangePage}
-            />
-          </Row>
-        </div>
-      );
-    } else {
-      contentSeries = <h1 style={styles.text}>No Series</h1>;
-    }
+  if (character) {
+    contentCard = (
+      <CustomCard
+        name={character.name}
+        description={character.description}
+        imageUrl={character.thumbnail}
+        isFavorite={character.isFavorite}
+        onClickFavorite={() =>
+          dispatch(toggleFavorite(character.id, character))
+        }
+        onClickEdit={() => setShowForm(!showForm)}
+      />
+    );
+  }
+  if (serieList.length > 0) {
+    contentSeries = (
+      <div>
+        <h1 style={styles.text}>SERIES</h1>
+        <Characters data={series.results || []} showIsFavorite={false} />
+        <Row justify="center">
+          <Pagination
+            pageSize={limit}
+            showTotal={(total) => (
+              <span style={styles.text}>Total {total}</span>
+            )}
+            total={series.total}
+            current={currentPage}
+            onChange={onChangePage}
+          />
+        </Row>
+      </div>
+    );
+  } else {
+    contentSeries = <h1 style={styles.text}>No Series</h1>;
   }
 
   return (
     <div>
-      <Backdrop show={loading && loadingSeries} />
+      <Backdrop show={loadingSeries} />
       <Row style={styles.container}>
         <Col span={8}>
           <div style={styles.containerCard}>{contentCard}</div>

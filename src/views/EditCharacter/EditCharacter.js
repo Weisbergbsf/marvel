@@ -67,7 +67,6 @@ const EditCharacter = props => {
                 name="name"
                 autoComplete="off"
                 value={charName}
-                defaultValue={charName}
                 onChange={onChangeName}
               />
             </Form.Item>

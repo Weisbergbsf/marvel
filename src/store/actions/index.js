@@ -1,3 +1,17 @@
-import charactersAction from "./charactersAction";
-
-export const actionCreators = Object.assign({}, charactersAction);
+export {
+  fetchCharactersByNameStart,
+  fetchCharactersByNameError,
+  fetchCharactersByNameSuccess,
+  fetchCharacterById,
+  fetchCharacterByIdSuccess,
+  fetchCharactersStart,
+  fetchCharactersSuccess,
+  fetchCharactersError,
+  fetchSeriesStart,
+  fetchSeriesSuccess,
+  fetchSeriesError,
+  toggleFavoriteSuccess,
+  fetchStorageCharacters,
+  fetchStorageCharactersSuccess,
+  updateCharacterSuccess
+} from "./charactersAction";
