@@ -1,16 +1,8 @@
 import * as type from "../types";
-import { fetchStart, fetchSuccess, fetchError } from "./utils/defaultMethods";
-
-export const fetchCharactersByNameStart = () => {
-  return fetchStart(type.FETCH_CHARACTERS_BY_NAME_START);
-};
+import { fetchSuccess } from "./utils/defaultMethods";
 
 export const fetchCharactersByNameSuccess = (characters) => {
   return fetchSuccess(type.FETCH_CHARACTERS_BY_NAME_SUCCSESS, characters);
-};
-
-export const fetchCharactersByNameError = (error) => {
-  return fetchError(type.FETCH_CHARACTERS_BY_NAME_FAIL, error);
 };
 
 export const fetchCharactersByName = (nameToSearch) => {
@@ -26,21 +18,13 @@ export const fetchCharacterByIdSuccess = (character) => {
 
 export const fetchCharacterById = (characterId) => {
   return {
-    type: type.FETCH_CHARACTERS_BY_ID,
+    type: type.FETCH_CHARACTER_BY_ID,
     characterId: characterId,
   };
 };
 
-export const fetchCharactersStart = () => {
-  return fetchStart(type.FETCH_CHARACTERS_START);
-};
-
 export const fetchCharactersSuccess = (characters) => {
   return fetchSuccess(type.FETCH_CHARACTERS_SUCCSESS, characters);
-};
-
-export const fetchCharactersError = (error) => {
-  return fetchError(type.FETCH_CHARACTERS_FAIL, error);
 };
 
 export const fetchCharacters = (nameToSearch, orderBy, limit, offset) => {
@@ -53,16 +37,8 @@ export const fetchCharacters = (nameToSearch, orderBy, limit, offset) => {
   };
 };
 
-export const fetchSeriesStart = () => {
-  return fetchStart(type.FETCH_SERIES_START);
-};
-
 export const fetchSeriesSuccess = (series) => {
   return fetchSuccess(type.FETCH_SERIES_SUCCSESS, series);
-};
-
-export const fetchSeriesError = (error) => {
-  return fetchError(type.FETCH_SERIES_FAIL, error);
 };
 
 export const fetchCharactersSeries = (id, limit, offset) => {

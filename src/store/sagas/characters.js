@@ -2,6 +2,8 @@ import { put } from "redux-saga/effects";
 
 import api from "../../utils/api";
 import * as actions from "./../actions";
+import * as type from "../types";
+import { fetchStart, fetchError } from "../actions/utils/defaultMethods";
 import {
   loadStorageCharacters,
   loadStorageFavorites,
@@ -12,7 +14,7 @@ import {
 import Character from "../../model/Character";
 
 export function* fetchCharactersByNameSaga(action) {
-  yield put(actions.fetchCharactersByNameStart());
+  yield put(fetchStart(type.FETCH_CHARACTERS_BY_NAME_START));
   let characters = [];
   try {
     const response = yield api.get(`characters`, {
@@ -25,7 +27,7 @@ export function* fetchCharactersByNameSaga(action) {
     });
     yield put(actions.fetchCharactersByNameSuccess(characters));
   } catch (error) {
-    yield put(actions.fetchCharactersByNameError(error));
+    yield put(fetchError(type.FETCH_CHARACTERS_BY_NAME_FAIL, error));
   }
 }
 
@@ -61,14 +63,14 @@ export function* fetchCharacterById(action) {
     );
     yield put(actions.fetchCharacterByIdSuccess(character));
   } catch (error) {
-    yield put(actions.fetchCharactersByNameError(error));
+    yield put(fetchError(type.FETCH_CHARACTER_BY_ID_FAIL, error));
   }
 }
 
 export function* fetchCharacters(action) {
   let characters = { total: 0, results: [] };
 
-  yield put(actions.fetchCharactersStart());
+  yield put(fetchStart(type.FETCH_CHARACTERS_START));
   try {
     const response = yield api.get(`characters`, {
       params: {
@@ -102,7 +104,7 @@ export function* fetchCharacters(action) {
     });
     yield put(actions.fetchCharactersSuccess(characters));
   } catch (error) {
-    yield put(actions.fetchCharactersError(error));
+    yield put(fetchError(type.FETCH_CHARACTERS_FAIL, error));
   }
 }
 
@@ -111,7 +113,7 @@ export function* fetchSeriesSaga(action) {
     total: 0,
     results: [],
   };
-  yield put(actions.fetchSeriesStart());
+  yield put(fetchStart(type.FETCH_SERIES_START));
   try {
     const response = yield api.get(
       `characters/${action.id}/series?limit=${action.limit}&offset=${action.offset}`
@@ -128,7 +130,7 @@ export function* fetchSeriesSaga(action) {
     });
     yield put(actions.fetchSeriesSuccess(series));
   } catch (error) {
-    yield put(actions.fetchSeriesError());
+    yield put(fetchError(type.FETCH_SERIES_FAIL, error));
   }
 }
 
@@ -154,7 +156,6 @@ export function* fetchStorageCharactersSaga() {
 }
 
 export function* updateCharacterSaga(action) {
-  console.log(action)
   yield saveCharacter(action.character, UPDATE);
   yield put(actions.updateCharacterSuccess(action.character));
 }

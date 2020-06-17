@@ -53,6 +53,11 @@ export default function (state = initialState, action) {
         error: action.error,
         loadingForSelect: false,
       };
+    case type.FETCH_CHARACTER_BY_ID_FAIL:
+      return {
+        ...state,
+        error: action.error,
+      };
 
     case type.FETCH_CHARACTERS_SUCCSESS:
       return {

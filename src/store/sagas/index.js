@@ -13,7 +13,7 @@ import {
 
 export function* whatchCharacters() {
   yield takeEvery(types.FETCH_CHARACTERS_BY_NAME, fetchCharactersByNameSaga);
-  yield takeEvery(types.FETCH_CHARACTERS_BY_ID, fetchCharacterById);
+  yield takeEvery(types.FETCH_CHARACTER_BY_ID, fetchCharacterById);
   yield takeEvery(types.FETCH_CHARACTERS, fetchCharacters);
   yield takeEvery(types.FETCH_SERIES, fetchSeriesSaga);
   yield takeEvery(types.TOGGLE_FAVORITE, toggleFavoriteSaga);
